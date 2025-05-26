@@ -10,28 +10,73 @@ document.addEventListener('DOMContentLoaded', function() {
             const tabElement = document.createElement('div');
             tabElement.className = `nav-tab ${tab === 'Text' ? 'active' : ''}`;
             tabElement.textContent = tab;
-            tabElement.addEventListener('click', () => setActiveTab(tabElement));
+            tabElement.addEventListener('click', () => setActiveTab(tab));
             navTabs.appendChild(tabElement);
         });
     }
 
-    // Initialize services
-    function initializeServices() {
-        servicesGrid.innerHTML = SERVICES.map(service => createServiceCard(service)).join('');
-        
-        // Add click handlers to service cards
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const serviceTitle = this.querySelector('.service-title').textContent;
-                const service = SERVICES.find(s => s.title === serviceTitle);
-                showServiceDetail(service);
-            });
+    function setActiveTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent === tabName);
+        });
+
+        // Update panels visibility
+        document.querySelectorAll('.tab-panel').forEach(panel => {
+            panel.classList.toggle('active', panel.id === `${tabName.toLowerCase().replace(' & ', '-').replace(' ', '-')}-panel`);
+        });
+
+        // Filter and display services for the active tab
+        const filteredServices = filterServicesByTab(tabName);
+        const activePanel = document.querySelector(`#${tabName.toLowerCase().replace(' & ', '-').replace(' ', '-')}-panel`);
+        if (activePanel) {
+            activePanel.innerHTML = `
+                <div class="services-grid">
+                    ${filteredServices.map(service => createServiceCard(service)).join('')}
+                </div>
+            `;
+        }
+    }
+
+    function filterServicesByTab(tab) {
+        return SERVICES.filter(service => {
+            switch(tab) {
+                case 'Text':
+                    return ['Text Generation', 'Ask to PDF', 'Document Analysis'].includes(service.title);
+                case 'Code':
+                    return ['Code Assistant'].includes(service.title);
+                case 'Image & Video':
+                    return ['Image Generation'].includes(service.title);
+                case 'Legal Domain':
+                    return ['Legal Assistant'].includes(service.title);
+                case 'Chatbot':
+                    return ['Chat Assistant'].includes(service.title);
+                default:
+                    return false;
+            }
         });
     }
 
-    function setActiveTab(tabElement) {
-        document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-        tabElement.classList.add('active');
+    // Initialize tab panels
+    function initializeTabPanels() {
+        const tabContent = document.createElement('div');
+        tabContent.className = 'tab-content';
+        
+        // Remove existing services grid
+        if (servicesGrid) {
+            servicesGrid.remove();
+        }
+
+        TABS.forEach(tab => {
+            const panel = document.createElement('div');
+            panel.id = `${tab.toLowerCase().replace(' & ', '-').replace(' ', '-')}-panel`;
+            panel.className = `tab-panel ${tab === 'Text' ? 'active' : ''}`;
+            tabContent.appendChild(panel);
+        });
+        
+        dashboard.appendChild(tabContent);
+        // Initialize first tab content
+        setActiveTab('Text');
     }
 
     function showServiceDetail(service) {
@@ -48,5 +93,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize the application
     initializeTabs();
-    initializeServices();
+    initializeTabPanels();
+
+    // Add click handlers for service cards
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.service-card')) {
+            const card = e.target.closest('.service-card');
+            const serviceTitle = card.querySelector('.service-title').textContent;
+            const service = SERVICES.find(s => s.title === serviceTitle);
+            showServiceDetail(service);
+        }
+    });
 });
