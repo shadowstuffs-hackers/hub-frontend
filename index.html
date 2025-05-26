@@ -1,13 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Services Hub</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+</head>
+<body>
+    <div id="root">
+        <nav class="nav-tabs" id="navTabs"></nav>
+        <div class="container" id="mainContainer">
+            <div id="dashboard">
+                <h1 class="main-title">AI Services Hub</h1>
+                <div class="services-grid" id="servicesGrid"></div>
+            </div>
+            <div id="serviceDetail" style="display: none;">
+                <!-- Service detail content will be added here -->
+            </div>
+        </div>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/main.js"></script>
+</body>
 </html>
