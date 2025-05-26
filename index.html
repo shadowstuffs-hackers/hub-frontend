@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Services Hub</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./styles/components.css">
+    <base href="/hub-frontend/">
+    <link rel="stylesheet" href="public/styles/main.css">
+    <link rel="stylesheet" href="public/styles/components.css">
 </head>
 <body>
     <div id="root">
@@ -14,15 +15,13 @@
         <div class="container" id="mainContainer">
             <div id="dashboard">
                 <h1 class="main-title">AI Services Hub</h1>
-                <div class="services-grid" id="servicesGrid"></div>
+                <!-- Removed servicesGrid div as it will be created by JS -->
             </div>
-            <div id="serviceDetail" style="display: none;">
-                <!-- Service detail content will be added here -->
-            </div>
+            <div id="serviceDetail" style="display: none;"></div>
         </div>
     </div>
-    <script src="./js/config.js"></script>
-    <script src="./js/services.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
