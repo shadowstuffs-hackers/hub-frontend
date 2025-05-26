@@ -14,10 +14,16 @@ jobs:
     - uses: actions/checkout@v3
       with:
         persist-credentials: false
+
+    # Create a dist directory for built files
+    - name: Create dist directory
+      run: |
+        mkdir -p dist
+        cp -r index.html 404.html js/ public/ dist/
         
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: .
+        folder: dist
         branch: gh-pages
         token: ${{ secrets.GITHUB_TOKEN }}

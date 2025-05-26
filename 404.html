@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found</title>
     <script>
-        window.location.href = '/';
+        // Handle GitHub Pages SPA redirects
+        var segmentCount = 1;
+        var location = window.location;
+        var repo = "/hub-frontend";
+        var l = location.pathname.split('/').slice(0, 1 + segmentCount).join('/') + repo;
+        l = l.replace(/\/+/g, '/'); // Remove any double slashes
+        window.location.href = location.protocol + '//' + location.hostname + l;
     </script>
 </head>
 <body>
-    Redirecting...
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, please click <a href="/hub-frontend">here</a>.</p>
 </body>
 </html>
